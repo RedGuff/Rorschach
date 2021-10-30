@@ -7,8 +7,7 @@ using namespace std;
 // https://fr.wikipedia.org/wiki/Inkscape (freeware GNU for almost all systems).
 // https://fr.wikipedia.org/wiki/Scalable_Vector_Graphics (Universal ASCII vectorial format).
 
-int XMax = 1920;
-int YMax = 1080;
+
 
 void help() {
     cout << "File must be writable!" << endl;
@@ -16,14 +15,18 @@ void help() {
 
 int main() {
     srand ( time ( NULL ) ); // No need for better init.
+int XMax = 1920;
+int YMax = 1080;
     int X = 0;
     int Y = 0;
     int R = 0;
     int colorRpc = 0;
     int colorVpc = 0;
     int colorBpc = 0;
+    int opacity = 0;
  // int background = 256;
-    int maxItems = 42;
+    int maxCercles = 42;
+    int maxItems = 1;
     string file = "Rorschach.svg"; // PPM, PNG, ORA are possible, too.
     ofstream myfile;
     // myfile.open (argv[1]);
@@ -38,21 +41,27 @@ int main() {
         myfile << XMax << "\" height=\"" << YMax << "\">" << endl;
         myfile << "<title>Image done by a procedural generator for Rorschach's tests.</title>\n<desc>Symetrical image.</desc>" << endl;
 
-        for (int items=0; items<maxItems ; items++) {
+        for (int items=0; items<maxCercles ; items++) {
             X = (rand() % (XMax/2)) -2;
             Y = 2 + rand() % (YMax - 3);
-            R = 5 + (rand() % 100);
+            R = 2 + (rand() % 42);
             int colorRpc = rand() % 100;
             int colorVpc = rand() % 100;
             int colorBpc = rand() % 100;
-            myfile << "<circle cx=\""<< X + (XMax/2) << "\" cy=\"" << Y << "\" r=\"" << R << "\" fill=\"rgb(" << colorRpc << "%, " << colorVpc << "%, " << colorBpc << "%)\" />";
-            myfile << " <circle cx=\""<<  (XMax/2) - X<< "\" cy=\"" << Y << "\" r=\"" << R << "\" fill=\"rgb(" << colorRpc << "%, " << colorVpc << "%, " << colorBpc << "%)\" />\n";
+            int opacity = rand() % 100;
+            myfile << "<circle cx=\"" << X + (XMax/2) << "\" cy=\"" << Y << "\" r=\"" << R << "\" fill=\"rgb(" << colorRpc << "%, " << colorVpc << "%, " << colorBpc << "%)\" opacity=\"." << opacity << "\" /> ";
+            myfile << "<circle cx=\"" << (XMax/2) - X << "\" cy=\"" << Y << "\" r=\"" << R << "\" fill=\"rgb(" << colorRpc << "%, " << colorVpc << "%, " << colorBpc << "%)\" opacity=\"." << opacity << "\" />\n";
             }
+            myfile << "\n";
         for (int items=0; items<maxItems ; items++) {
             //  myfile << "<path ";
-            } for (int items=0; items<maxItems ; items++) {
+            }
+             myfile << "\n";
+            for (int items=0; items<maxItems ; items++) {
             //    myfile << "<ellipse";
-            } for (int items=0; items<maxItems ; items++) {
+            }
+             myfile << "\n";
+            for (int items=0; items<maxItems ; items++) {
             myfile << "";
             }
         myfile << "\n</svg>";
