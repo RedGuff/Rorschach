@@ -20,12 +20,18 @@ int YMax = 1080;
     int X = 0;
     int Y = 0;
     int R = 0;
+    int RX = 0;
+    int RY = 0;
+    int SX = 0;
+    int SY = 0;
+    int rot = 0;
     int colorRpc = 0;
     int colorVpc = 0;
     int colorBpc = 0;
     int opacity = 0;
  // int background = 256;
-    int maxCercles = 42;
+    int maxCercles = 420;
+    int maxEllipses = 420;
     int maxItems = 1;
     string file = "Rorschach.svg"; // PPM, PNG, ORA are possible, too.
     ofstream myfile;
@@ -53,17 +59,32 @@ int YMax = 1080;
             myfile << "<circle cx=\"" << (XMax/2) - X << "\" cy=\"" << Y << "\" r=\"" << R << "\" fill=\"rgb(" << colorRpc << "%, " << colorVpc << "%, " << colorBpc << "%)\" opacity=\"." << opacity << "\" />\n";
             }
             myfile << "\n";
+
+            for (int items=0; items<maxEllipses ; items++) {
+            X = (rand() % (XMax/2)) -2;
+            Y = 2 + rand() % (YMax - 3);
+            RX = 2 + (rand() % 42);
+            RY = 2 + (rand() % 42);
+            SX = -85 + (rand() % 170);
+            SY = -85 + (rand() % 170);
+            rot = (rand() % 360);
+            int colorRpc = rand() % 100;
+            int colorVpc = rand() % 100;
+            int colorBpc = rand() % 100;
+            int opacity = rand() % 100;
+     // Cisaillement avec décallage !
+       //     myfile << "<ellipse cx=\"" << X + (XMax/2) << "\" cy=\"" << Y << "\" rx=\"" << RX << "\" ry=\"" << RY << "\" transform=\"skewX(" << SX <<")\" fill=\"rgb(" << colorRpc << "%, " << colorVpc << "%, " << colorBpc << "%)\" opacity=\"." << opacity << "\" /> ";
+        //    myfile << "<ellipse cx=\"" << (XMax/2) - X << "\" cy=\"" << Y << "\" rx=\"" << RX << "\" ry=\"" << RY << "\" fill=\"rgb(" << colorRpc << "%, " << colorVpc << "%, " << colorBpc << "%)\" opacity=\"." << opacity << "\" />\n";
+            myfile << "<ellipse cx=\"" << X + (XMax/2) << "\" cy=\"" << Y << "\" rx=\"" << RX << "\" ry=\"" << RY << "\" transform=\"rotate("<<   rot << ","<< (XMax/2) << "," << Y <<")\" fill=\"rgb(" << colorRpc << "%, " << colorVpc << "%, " << colorBpc << "%)\" opacity=\"." << opacity << "\" /> ";
+            myfile << "<ellipse cx=\"" << (XMax/2) - X << "\" cy=\"" << Y << "\" rx=\"" << RX << "\" ry=\"" << RY << "\" transform=\"rotate("<<  -rot << ","<<(XMax/2) << "," << Y << ")\" fill=\"rgb(" << colorRpc << "%, " << colorVpc << "%, " << colorBpc << "%)\" opacity=\"." << opacity << "\" />\n";
+
+            }
+             myfile << "\n";
         for (int items=0; items<maxItems ; items++) {
             //  myfile << "<path ";
             }
              myfile << "\n";
-            for (int items=0; items<maxItems ; items++) {
-            //    myfile << "<ellipse";
-            }
-             myfile << "\n";
-            for (int items=0; items<maxItems ; items++) {
-            myfile << "";
-            }
+
         myfile << "\n</svg>";
         myfile.close();
         }
